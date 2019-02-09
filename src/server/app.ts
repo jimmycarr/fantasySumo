@@ -5,7 +5,9 @@ import * as database from "./database";
 const app = express();
 const port = 3000;
 
-app.get("/", (req, res) => res.send("Hello World!"));
+app.use(express.static(__dirname + "./../../")); // serves the index.html
+
+// app.get("/", (req, res) => res.send("Hello World!"));
 
 app.get("/update-rankings", (req, res) => {
   database.updateSumoRanks();
