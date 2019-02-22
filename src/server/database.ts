@@ -9,15 +9,7 @@ const options = {
   user: "root"
 };
 
-// interface ISumo {
-//   position: number;
-//   shikona: string;
-//   rikishi_id: string;
-//   heya: string;
-//   rank: string;
-// }
-
-interface ISumo {
+interface ISumoInfo {
   banzuke_id: number;
   rikishi_id: string;
   shikona: string;
@@ -26,16 +18,26 @@ interface ISumo {
 }
 
 export const getSumoRanks = async () => {
-  const data: ISumo[] = [];
+  const data: ISumoInfo[] = [];
   const session = await mysql.getSession(options);
+  let counter: number = 0;
   await session
     .getSchema("sumo")
     .getTable("rankings")
     .select(["shikona", "rikishi_id", "heya", "rank"])
-    .execute((row: ISumo) => {
+    .execute((result: any) => {
+      counter++;
+      const row: ISumoInfo = {
+        banzuke_id: counter, // Index
+        banzuke_name: result[3], // Rank
+        heya_name: result[2], // Heya
+        rikishi_id: result[1], // Rikishi Id
+        shikona: result[0] // Shikona
+      };
       data.push(row);
     });
   session.close();
+
   return data;
 };
 
@@ -60,7 +62,7 @@ export const updateSumoRanks = async () => {
   table.delete("true").execute();
   // Loop through results to insert each element
 
-  sumoData.BanzukeTable.forEach(async (sumo: ISumo) => {
+  sumoData.BanzukeTable.forEach(async (sumo: ISumoInfo) => {
     if (sumo.banzuke_id) {
       return await table
         .insert(`position`, `rikishi_id`, `shikona`, `rank`, `heya`)
