@@ -11,6 +11,8 @@ class HeaderBar extends React.Component {
   }
 }
 
+// Styles
+
 const FullSpanBar = styled.div`
   display: flex;
   align-items: center;

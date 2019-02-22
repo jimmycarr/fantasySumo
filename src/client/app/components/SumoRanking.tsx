@@ -40,7 +40,7 @@ class SumoRankTable extends React.Component<any, IState> {
   public render() {
     return (
       <>
-        <div>The Sumos are: </div>
+        <PageHeader>Sumo Ranks for Current Basho</PageHeader>
         <div>{this.buildTable(this.state.data)}</div>
       </>
     );
@@ -48,11 +48,11 @@ class SumoRankTable extends React.Component<any, IState> {
 
   private buildRow(sumoInfo: ISumoInfo) {
     return (
-      <tr key={sumoInfo.banzuke_id}>
+      <SumoRow key={sumoInfo.banzuke_id} rank={sumoInfo.banzuke_name}>
         <td key={"banzuke"}>{sumoInfo.banzuke_name}</td>
         <td key={"shikona"}>{sumoInfo.shikona}</td>
         <td key={"heya"}>{sumoInfo.heya_name}</td>
-      </tr>
+      </SumoRow>
     );
   }
 
@@ -62,21 +62,57 @@ class SumoRankTable extends React.Component<any, IState> {
       sumoData.forEach((sumo: ISumoInfo) => rows.push(this.buildRow(sumo)));
 
       return (
-        <table>
+        <SumoTable>
           <tbody>
-            <tr>
+            <SumoHeaderRow>
               <th>Rank</th>
               <th>Name</th>
               <th>Heya</th>
-            </tr>
+            </SumoHeaderRow>
             {rows}
           </tbody>
-        </table>
+        </SumoTable>
       );
     } else {
       return <div>Loading data...</div>;
     }
   }
 }
+
+// Styles
+
+const PageHeader = styled.div`
+  font-weight: bold;
+  font-size: 24px;
+  margin: 8px 24px;
+`;
+
+const SumoTable = styled.table`
+  margin: 0 24px;
+  width: 80%;
+  border-collapse: collapse;
+`;
+
+interface SumoRowProps {
+  rank: string;
+}
+
+const SumoRow = styled.tr`
+  background-color: ${(props: SumoRowProps) =>
+    props.rank == "Yokozuna"
+      ? "#6697a8"
+      : props.rank == "Ozeki"
+      ? "#7fa9b7"
+      : props.rank == "Sekiwake"
+      ? "#99bac5"
+      : props.rank == "Komusubi"
+      ? "#b2cbd3"
+      : "#ccdce2"};
+`;
+
+const SumoHeaderRow = styled.tr`
+  background-color: #00536f;
+  color: white;
+`;
 
 export default SumoRankTable;
