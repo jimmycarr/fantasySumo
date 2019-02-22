@@ -27,12 +27,14 @@
     "@types/react": "^16.8.4",
     "@types/react-dom": "^16.8.2",
     "@types/styled-components": "^4.1.8",
+    "@types/webfontloader": "^1.6.29",
     "express": "^4.16.4",
     "react": "^16.8.2",
     "react-dom": "^16.8.2",
     "request": "^2.88.0",
     "request-promise-native": "^1.0.5",
     "styled-components": "^4.1.3",
+    "webfontloader": "^1.6.28",
     "winston": "^3.2.1"
   },
   "devDependencies": {
