@@ -26,7 +26,6 @@ class SumoRankTable extends React.Component<any, IState> {
   public async componentDidMount() {
     await fetch("/api/get-rankings")
       .then((response: Response) => {
-        console.log("Got Response:", response);
         return response.json();
       })
       .catch((err: Error) => {
@@ -34,15 +33,11 @@ class SumoRankTable extends React.Component<any, IState> {
         return JSON.stringify(err);
       })
       .then((data: ISumoInfo[]) => {
-        console.log("Got data:", data);
-
         return this.setState({ data });
       });
   }
 
   public render() {
-    console.log("Render all");
-
     return (
       <>
         <div>The Sumos are: </div>
@@ -52,7 +47,6 @@ class SumoRankTable extends React.Component<any, IState> {
   }
 
   private buildRow(sumoInfo: ISumoInfo) {
-    console.log("Build row", sumoInfo.banzuke_id);
     return (
       <tr key={sumoInfo.banzuke_id}>
         <td key={"banzuke"}>{sumoInfo.banzuke_name}</td>
@@ -63,12 +57,9 @@ class SumoRankTable extends React.Component<any, IState> {
   }
 
   private buildTable(sumoData?: ISumoInfo[]) {
-    console.log("Build table");
-
     if (sumoData) {
       const rows: JSX.Element[] = [];
       sumoData.forEach((sumo: ISumoInfo) => rows.push(this.buildRow(sumo)));
-      console.log("ROEWZ :", rows);
 
       return (
         <table>
