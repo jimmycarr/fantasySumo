@@ -23,6 +23,20 @@ module.exports = {
       // All output '.js' files will have any sourcemaps re-processed by 'source-map-loader'.
       { enforce: "pre", test: /\.js$/, loader: "source-map-loader" }
     ]
+  },
+
+  // For proxying the requests to backend server
+  devServer: {
+    proxy: {
+      "/api/*": {
+        target: "http://localhost:3000"
+      }
+    }
+  },
+
+  // Workaround to fix a crappy issue in webpack with node modules that use fs
+  node: {
+    fs: "empty"
   }
 
   // When importing a module whose path matches one of the following, just
