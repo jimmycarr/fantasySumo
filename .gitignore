@@ -3,11 +3,14 @@ logs
 *.log
 npm-debug.log*
 
+# Test Coverage Reports
+coverage
+
 # Dependency directories
-node_modules/
+node_modules
 
 # Distribution/Build folders
-dist/
+dist
 
 # Optional eslint cache
 .eslintcache
